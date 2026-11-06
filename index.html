@@ -51,6 +51,7 @@ body{background:#203a67}
  .rescue{min-height:116px}
  .match-card{font-size:clamp(11px,3.5vw,15px)}
 }
+.shell-managed .logo,.shell-managed #game .buttons,.embedded #testStart{display:none!important}
 </style></head><body><main class="app"><div class="logo">VOCABULARY MATCH</div><button id="testStart" class="primary">TEST VOCABULARY MATCH</button>
 <section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">DRAG A WORD ONTO ITS TRANSLATION TO SAVE BOB THE CAT</div><div class="hud"><div>SCORE <span id="score">0</span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="match-layout"><div id="rescue" class="rescue" aria-label="Cat rescue tower"><svg class="park" viewBox="0 0 160 100" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true"><path fill="#a6d9e5" d="M0 0h160v100H0z"/><path fill="#fff2cd" d="M10 15h8v-4h10v4h8v4H10zm83-8h13V3h13v4h9v4H93z"/><path fill="#6fa961" d="M0 59h17v-8h22v5h16v-9h24v8h28v-6h28v7h25v44H0z"/><path fill="#8cc367" d="M0 69h160v31H0z"/><path fill="#dcbd89" d="M0 95h37v-8h13v-6h20v-6h29v6H81v7H67v12H0z"/><path fill="#456d40" d="M6 85h2v4H6zm27-10h2v4h-2zm89 16h2v4h-2zm26-12h2v4h-2z"/><path fill="#f5e5a1" d="M12 76h3v2h-3zm108 7h3v2h-3zm27 10h3v2h-3z"/><path fill="#8b5239" d="M9 63h18v3H9zm-2 4h22v3H7zm3 3h2v5h-2zm14 0h2v5h-2z"/></svg><div class="tree"><svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true"><path fill="#59392c" d="M43 64H28v-7h6V31h-7v-5H14v-6h15v4h8V12h7v11h8v-7h7v13H46v28h5v7z"/><path fill="#ad7548" d="M39 59h-5v-4h5V30h-9v-5h9V14h4v45z"/><path fill="#23594b" d="M2 8h6V4h13V1h11v4h14V1h10v5h7v15h-5v6H43v-5H28v5H12v-4H3z"/><path fill="#518d43" d="M7 9h9V5h12v4h12V6h15v4h5v7H48v4H33v-4H20v5h-8v-6H7z"/><path fill="#9ebe55" d="M11 9h13v4H11zM36 10h17v4H36zM24 14h8v4h-8z"/></svg></div><div class="platform"><span class="cat"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/><path fill="#754b38" d="M5 3h1v2H5zm5 0h1v2h-1zm3 7h1v1h-1z"/><path fill="#f6b6b9" d="M3 8h2v1H3zm8 0h2v1h-2z"/><path fill="#d9c5ae" d="M5 12h1v1H5zm4 0h1v1H9z"/></svg></span></div><div class="girl" id="rescueGirl"><svg viewBox="0 0 16 24" shape-rendering="crispEdges" aria-hidden="true"><path fill="#231c31" d="M4 0h8v2h2v10h-2v2H4v-2H2V3h2z"/><path fill="#514259" d="M4 2h8v2H4z"/><path fill="#ffd4b5" d="M5 6h6v1h2v4h-2v2H5v-2H3V8h2zM1 14h3v5H1zM12 14h3v5h-3z"/><path fill="#271d30" d="M5 8h1v2H5zM10 8h1v2h-1zM3 21h4v3H3zM9 21h4v3H9z"/><path fill="#fff1db" d="M3 13h10v4H3z"/><path fill="#ed649b" d="M4 13h2v3h4v-3h2v8H9v-2H7v2H4z"/><path fill="#ffabc8" d="M6 16h4v2H6z"/><path fill="#be427a" d="M4 17h2v3H4zm6 2h2v2h-2z"/><path fill="#ffe5f0" d="M5 15h1v1H5zm5 0h1v1h-1z"/><path fill="#f49e9e" d="M4 10h2v1H4zm6 0h2v1h-2z"/><path fill="#654d65" d="M3 22h3v1H3zm7 0h3v1h-3z"/><path fill="#fff4dd" d="M7 11h2v1H7z"/></svg><span class="hug"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/><path fill="#754b38" d="M5 3h1v2H5zm5 0h1v2h-1zm3 7h1v1h-1z"/><path fill="#f6b6b9" d="M3 8h2v1H3zm8 0h2v1h-2z"/><path fill="#d9c5ae" d="M5 12h1v1H5zm4 0h1v1H9z"/></svg></span></div><div id="tower" class="tower"></div></div><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div></div><div id="status" class="status" role="status"></div><div id="rescueResult" class="rescue-result" hidden><div class="rescue-result-card"><h2>BOB THE CAT IS SAFE</h2><svg class="rescue-portrait" viewBox="0 0 160 104" shape-rendering="crispEdges" role="img" aria-label="A smiling girl in pink overalls hugs Bob, her smiling brown-and-white cat">
 <path fill="#b0e0de" d="M0 0h160v104H0z"/><path fill="#86bba8" d="M0 76h160v28H0z"/><path fill="#fff1b4" d="M20 16h3v-3h3v3h3v3h-3v3h-3v-3h-3zm107 9h3v-3h3v3h3v3h-3v3h-3v-3h-3zM14 54h4v4h-4zm124 9h4v4h-4z"/>
@@ -64,12 +65,14 @@ body{background:#203a67}
 </main><script>
 (function(){"use strict";
 const E=id=>document.getElementById(id);
-const game=E("game"), lang="de-DE", SET=6;
-const vocab=[["gucken","to watch, to look at"],["fahren","to drive"],["essen","to eat"],["trinken","to drink"],["schlafen","to sleep"],["lesen","to read"],["schreiben","to write"],["sprechen","to speak"],["gehen","to go"],["kommen","to come"],["spielen","to play"],["lernen","to learn"]].map(([target,prompt],id)=>({id,target,english:prompt}));
+const game=E("game"), SET=6;
+const sampleVocab=[["gucken","to watch, to look at"],["fahren","to drive"],["essen","to eat"],["trinken","to drink"],["schlafen","to sleep"],["lesen","to read"],["schreiben","to write"],["sprechen","to speak"],["gehen","to go"],["kommen","to come"],["spielen","to play"],["lernen","to learn"]].map(([target,prompt],id)=>({id,target,english:prompt}));
+let vocab=sampleVocab,lang="de-DE",subscriber=null,disposed=false,initialized=false;
 let soundOn=true,audioCtx=null,order=[],setIndex=0,score=0;
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
 function audio(){if(!soundOn)return null;try{var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;if(!audioCtx)audioCtx=new A();if(audioCtx.state==="suspended")audioCtx.resume();return audioCtx}catch(e){return null}}function beep(f,d){var a=audio();if(!a)return;var o=a.createOscillator(),g=a.createGain(),n=a.currentTime;o.type="square";o.frequency.value=f;g.gain.setValueAtTime(.035,n);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(a.destination);o.start();o.stop(n+d)}function good(){beep(520,.06);setTimeout(function(){beep(780,.08)},65)}function bad(){beep(150,.16)}function speak(word){
  if(!soundOn||!("speechSynthesis" in window))return;
+ if(subscriber){subscriber({type:"BT_MATCH_SPEAK",text:word});return}
  const voices=window.speechSynthesis.getVoices();
  const voice=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase())||
    voices.find(v=>v.lang.toLowerCase().split("-")[0]===lang.split("-")[0]);
@@ -81,7 +84,7 @@ function audio(){if(!soundOn)return null;try{var A=window.AudioContext||window.w
  window.speechSynthesis.cancel();
  window.speechSynthesis.speak(utterance);
 }
-function hud(){E("score").textContent=score;var totalSets=Math.ceil(vocab.length/SET),setNo=Math.floor(setIndex/SET)+1,from=setIndex+1,to=Math.min(setIndex+SET,vocab.length);E("progress").textContent="SET "+setNo+" OF "+totalSets+" · WORDS "+from+"–"+to+" OF "+vocab.length}
+function hud(){subscriber?.({type:"BT_MATCH_STATE",...state()});E("score").textContent=score;var totalSets=Math.ceil(vocab.length/SET),setNo=Math.floor(setIndex/SET)+1,from=setIndex+1,to=Math.min(setIndex+SET,vocab.length);E("progress").textContent="SET "+setNo+" OF "+totalSets+" · WORDS "+from+"–"+to+" OF "+vocab.length}
 function start(){
  resetPause();
  order=shuffle(vocab);setIndex=0;score=0;
@@ -193,6 +196,7 @@ for(const type of ["pointercancel","lostpointercapture"]){
  matchBoard.addEventListener(type,e=>{if(drag?.id===e.pointerId)cancelDrag()});
 }
 function toMenu(){
+ if(subscriber){subscriber({type:"BT_MATCH_MENU"});return}
  E("rescueResult").hidden=true;
  resetPause();
  E("testStart").hidden=false;
@@ -226,4 +230,28 @@ function resetPause(){
 E("pause").onclick=function(){
  paused=!paused;cancelDrag();E("board").inert=paused;this.textContent=paused?"RESUME":"PAUSE";
 };
-})();</script></body></html>
+function state(){
+ return {status:disposed?"disposed":game.classList.contains("active")&&!paused?"running":"paused",soundOn,score,lives:0,round:1,done:score/10};
+}
+if(parent!==window)document.body.classList.add("embedded");
+window.BTMatch={
+ initialize(set){
+   if(!Array.isArray(set.pairs)||set.pairs.length<4||!set.pairs.every(pair=>Array.isArray(pair)&&pair.length===2&&pair.every(word=>typeof word==="string"&&word.trim())))return false;
+   vocab=set.pairs.map(([english,target],id)=>({id,english,target}));
+   lang=set.language;
+   document.querySelector(".colTitle").textContent=new Intl.DisplayNames(["en"],{type:"language"}).of(set.promptLanguage);
+   E("targetTitle").textContent=new Intl.DisplayNames(["en"],{type:"language"}).of(lang);
+   initialized=true;
+   return true;
+ },
+ setShellManaged(value){document.body.classList.toggle("shell-managed",value);return true},
+ subscribe(handler){if(subscriber)return false;subscriber=handler;return true},
+ resume(){if(!initialized)return false;if(!game.classList.contains("active"))start();else if(paused)E("pause").click();return true},
+ pause(){if(game.classList.contains("active")&&!paused)E("pause").click();return true},
+ restart(){if(!initialized)return false;start();return true},
+ setSound(value){if(typeof value!=="boolean")return false;if(soundOn!==value)E("sound").click();return true},
+ resize(){},
+ state,
+ dispose(){disposed=true;resetPause();game.classList.remove("active");subscriber=null}
+};
+})();</script><script type="module" src="./bootstrap.mjs"></script></body></html>
