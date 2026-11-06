@@ -21,13 +21,18 @@ body{background:#203a67}
 .match-layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(150px,1fr);gap:10px}
 .match-layout .columns{grid-area:1 / 1;min-width:0}
 .rescue{grid-area:1 / 2;position:relative;min-height:240px;background:#14284a;border:3px solid #0c1938;--rise:0%}
-.platform{position:absolute;bottom:65%;left:18%;width:64%;height:7px;background:#79b6cf;text-align:center}
-.cat{position:relative;bottom:29px;font-size:24px;left:23%}
-.girl{position:absolute;bottom:var(--rise);left:50%;transform:translateX(-50%);font-size:25px;transition:bottom .35s;z-index:1}
-.hug,.rescued .cat,.rescued .girl{font-size:0}
-.rescued .hug{font-size:25px}
+.tree{position:absolute;right:0;bottom:0;width:66%;height:100%;pointer-events:none}
+.tree svg{width:100%;height:100%}
+.platform{position:absolute;bottom:65%;left:49%;width:30%;height:5px;background:#8f5b38}
+.cat{position:absolute;bottom:5px;left:45%;width:clamp(18px,3vw,30px);line-height:0}
+.girl{position:absolute;bottom:var(--rise);left:50%;transform:translateX(-50%);width:clamp(23px,4vw,44px);line-height:0;transition:bottom .35s;z-index:1}
+.girl svg,.cat svg{width:100%;height:auto}
+.hug,.rescued .cat{display:none}
+.rescued .hug{display:block;position:absolute;top:36%;left:40%;width:68%;animation:pickup .35s ease-out}
+@keyframes pickup{from{transform:translate(45%,35%)}to{transform:none}}
 .tower{position:absolute;bottom:0;left:25%;width:50%;height:65%;display:flex;flex-direction:column-reverse;align-items:stretch}
-.tower-block{height:calc(100% / var(--pairs,6));background:#f2d64b;color:#101a43;border:2px solid #101a43;text-align:center;font-size:11px;overflow:hidden}
+.tower-block{height:calc(100% / var(--pairs,6));background:repeating-linear-gradient(0deg,#855035 0 2px,#a36c43 2px 6px);color:#332117;border:2px solid #4e3022;text-align:center;font-size:11px;overflow:hidden}
+.tower-block span{background:#f3d8a6;padding:0 4px}
 .match-card{position:relative;display:grid;place-items:center;min-height:44px;padding:3px;margin:3px 0;background:#f6e8bd;color:#101a43;border:2px solid #101a43;font-weight:bold;text-align:center;overflow-wrap:anywhere;touch-action:none;user-select:none;cursor:grab}
 .match-card[data-side=target]{background:#9edfed}
 .match-card.dragging{z-index:5;pointer-events:none}
@@ -52,7 +57,7 @@ kommen	to come
 spielen	to play
 lernen	to learn</textarea><button id="swap">⇄ SWAP SIDES</button><div id="preview" class="preview"></div><div id="error" class="error"></div></div>
 </div></section>
-<section id="studentEntry" aria-live="polite"><h2>VOCABULARY MATCH</h2><h2 id="studentSetTitle">LOADING VOCABULARY…</h2><div id="studentSetMeta" class="student-meta">PLEASE WAIT</div><button id="studentPlay" class="primary wide" type="button" disabled>PLAY</button></section><section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">DRAG A WORD ONTO ITS TRANSLATION</div><div class="hud"><div>SCORE <span id="score">0</span><span id="lives" hidden></span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="match-layout"><div id="rescue" class="rescue" aria-label="Cat rescue tower"><div class="platform"><span class="cat">🐱</span></div><div class="girl">👧<span class="hug">🤗🐱</span></div><div id="tower" class="tower"></div></div><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div></div><div id="status" class="status" role="status"></div><button id="nextBoard" class="primary" hidden>NEXT BOARD</button></div></section>
+<section id="studentEntry" aria-live="polite"><h2>VOCABULARY MATCH</h2><h2 id="studentSetTitle">LOADING VOCABULARY…</h2><div id="studentSetMeta" class="student-meta">PLEASE WAIT</div><button id="studentPlay" class="primary wide" type="button" disabled>PLAY</button></section><section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">DRAG A WORD ONTO ITS TRANSLATION</div><div class="hud"><div>SCORE <span id="score">0</span><span id="lives" hidden></span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="match-layout"><div id="rescue" class="rescue" aria-label="Cat rescue tower"><div class="tree"><svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true"><path fill="#59392c" d="M43 64H28v-7h6V31h-7v-5H14v-6h15v4h8V12h7v11h8v-7h7v13H46v28h5v7z"/><path fill="#ad7548" d="M39 59h-5v-4h5V30h-9v-5h9V14h4v45z"/><path fill="#23594b" d="M2 8h6V4h13V1h11v4h14V1h10v5h7v15h-5v6H43v-5H28v5H12v-4H3z"/><path fill="#518d43" d="M7 9h9V5h12v4h12V6h15v4h5v7H48v4H33v-4H20v5h-8v-6H7z"/><path fill="#9ebe55" d="M11 9h13v4H11zM36 10h17v4H36zM24 14h8v4h-8z"/></svg></div><div class="platform"><span class="cat"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/></svg></span></div><div class="girl" id="rescueGirl"><svg viewBox="0 0 16 24" shape-rendering="crispEdges" aria-hidden="true"><path fill="#231c31" d="M4 0h8v2h2v10h-2v2H4v-2H2V3h2z"/><path fill="#514259" d="M4 2h8v2H4z"/><path fill="#ffd4b5" d="M5 6h6v1h2v4h-2v2H5v-2H3V8h2zM1 14h3v5H1zM12 14h3v5h-3z"/><path fill="#271d30" d="M5 8h1v2H5zM10 8h1v2h-1zM3 21h4v3H3zM9 21h4v3H9z"/><path fill="#fff1db" d="M3 13h10v4H3z"/><path fill="#ed649b" d="M4 13h2v3h4v-3h2v8H9v-2H7v2H4z"/><path fill="#ffabc8" d="M6 16h4v2H6z"/></svg><span class="hug"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/></svg></span></div><div id="tower" class="tower"></div></div><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div></div><div id="status" class="status" role="status"></div><button id="nextBoard" class="primary" hidden>NEXT BOARD</button></div></section>
 <div id="complete" class="overlay"><div><div class="big">ROUND COMPLETE!</div><div class="msg">All words matched!</div><button id="nextRound" class="primary">PLAY NEXT ROUND</button><button id="completeMenu" class="pink">MAIN MENU</button></div></div>
 <div id="gameOver" class="overlay"><div><div class="big" style="color:#ef6689">GAME OVER</div><div class="msg">Nice try, your grandma would be proud</div><button id="again" class="primary">PLAY AGAIN</button><button id="overMenu" class="pink">MAIN MENU</button></div></div>
 </main><script>
@@ -167,11 +172,14 @@ function matchCards(card,other){
  card.classList.add("matched");other.classList.add("matched");
  const block=document.createElement("div");
  block.className="tower-block";
- block.textContent=word;
+ const plaque=document.createElement("span");
+ plaque.textContent=word;
+ block.append(plaque);
  E("tower").append(block);
  const to=block.getBoundingClientRect();
  block.animate([{transform:`translate(${from.left-to.left}px,${from.top-to.top}px)`,opacity:.4},{transform:"none",opacity:1}],{duration:350});
  E("rescue").style.setProperty("--rise",matched.size/boardSize*65+"%");
+ E("rescueGirl").animate([{transform:"translate(-50%,0)"},{transform:"translate(-50%,-9px)"},{transform:"translate(-50%,0)"}],{duration:350});
  score+=10;answered++;
  E("status").textContent="✓ "+word;
  E("status").style.color="#78df62";
