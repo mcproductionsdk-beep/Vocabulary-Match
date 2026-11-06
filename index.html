@@ -17,6 +17,27 @@ body{background:#203a67}
 .match-instruction{background:#f2d64b;color:#101a43;text-align:center;padding:7px;margin-top:5px;font-weight:bold}
 #board[inert]{opacity:.55}
 @media(max-width:720px){#game .mobile-submit{min-width:28px;min-height:44px}#game .columns>div{min-width:0}}
+
+.match-layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(150px,1fr);gap:10px}
+.match-layout .columns{grid-area:1 / 1;min-width:0}
+.rescue{grid-area:1 / 2;position:relative;min-height:240px;background:#14284a;border:3px solid #0c1938;--rise:0%}
+.platform{position:absolute;bottom:65%;left:18%;width:64%;height:7px;background:#79b6cf;text-align:center}
+.cat{position:relative;bottom:29px;font-size:24px;left:23%}
+.girl{position:absolute;bottom:var(--rise);left:50%;transform:translateX(-50%);font-size:25px;transition:bottom .35s;z-index:1}
+.hug,.rescued .cat,.rescued .girl{font-size:0}
+.rescued .hug{font-size:25px}
+.tower{position:absolute;bottom:0;left:25%;width:50%;height:65%;display:flex;flex-direction:column-reverse;align-items:stretch}
+.tower-block{height:calc(100% / var(--pairs,6));background:#f2d64b;color:#101a43;border:2px solid #101a43;text-align:center;font-size:11px;overflow:hidden}
+.match-card{position:relative;display:grid;place-items:center;min-height:44px;padding:3px;margin:3px 0;background:#f6e8bd;color:#101a43;border:2px solid #101a43;font-weight:bold;text-align:center;overflow-wrap:anywhere;touch-action:none;user-select:none;cursor:grab}
+.match-card[data-side=target]{background:#9edfed}
+.match-card.dragging{z-index:5;pointer-events:none}
+.match-card.matched{visibility:hidden}
+#nextBoard{margin:0 auto}
+@media(max-width:720px){
+ .match-layout{display:flex;flex-direction:column;gap:4px}
+ .rescue{min-height:116px}
+ .match-card{font-size:clamp(11px,3.5vw,15px)}
+}
 </style></head><body><main class="app"><div class="logo">VOCABULARY MATCH</div><button id="testStart" class="primary">TEST VOCABULARY MATCH</button>
 <section id="menu" class="screen" hidden aria-hidden="true"><div class="grid"><div class="card"><h2>GAME SETTINGS</h2><div class="help"><b>Target language</b></div><select id="language"><option value="de-DE">German</option><option value="es-ES">Spanish</option><option value="da-DK">Danish</option><option value="en-US">English</option></select><div id="voiceCheck" class="voiceCheck"><span class="voiceWait">Checking pronunciation voice…</span></div><button id="testVoice" class="yellow" type="button">🔊 TEST VOICE</button><div class="help" style="margin-top:8px"><b>Vocabulary</b></div><select id="category"></select><div class="preview"><b>How to play</b><br>English words are numbered. Type the matching number beside each target-language word.<br><br>Correct = pronunciation.<br>Wrong = lose a life.</div><button id="play" class="primary wide">PLAY</button><div class="share-panel"><button id="createStudentLink" class="pink" type="button">🔗 CREATE STUDENT LINK</button><button id="copyStudentLink" class="yellow" type="button">📋 COPY LINK</button><div id="shareStatus" role="status" aria-live="polite">Create a permanent student link using this vocabulary.</div></div></div><div class="card"><h2>PASTE QUIZLET WORDS</h2><div class="help">Target language first, English second. Tab-separated Quizlet export works directly.</div><textarea id="words">gucken	to watch, to look at
 fahren	to drive
@@ -31,11 +52,11 @@ kommen	to come
 spielen	to play
 lernen	to learn</textarea><button id="swap">⇄ SWAP SIDES</button><div id="preview" class="preview"></div><div id="error" class="error"></div></div>
 </div></section>
-<section id="studentEntry" aria-live="polite"><h2>VOCABULARY MATCH</h2><h2 id="studentSetTitle">LOADING VOCABULARY…</h2><div id="studentSetMeta" class="student-meta">PLEASE WAIT</div><button id="studentPlay" class="primary wide" type="button" disabled>PLAY</button></section><section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">MATCH EACH WORD TO ITS NUMBER</div><div class="hud"><div>SCORE <span id="score">0</span> · <span id="lives">❤❤❤</span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div><div id="status" class="status"></div></div></section>
+<section id="studentEntry" aria-live="polite"><h2>VOCABULARY MATCH</h2><h2 id="studentSetTitle">LOADING VOCABULARY…</h2><div id="studentSetMeta" class="student-meta">PLEASE WAIT</div><button id="studentPlay" class="primary wide" type="button" disabled>PLAY</button></section><section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">DRAG A WORD ONTO ITS TRANSLATION</div><div class="hud"><div>SCORE <span id="score">0</span><span id="lives" hidden></span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="match-layout"><div id="rescue" class="rescue" aria-label="Cat rescue tower"><div class="platform"><span class="cat">🐱</span></div><div class="girl">👧<span class="hug">🤗🐱</span></div><div id="tower" class="tower"></div></div><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div></div><div id="status" class="status" role="status"></div><button id="nextBoard" class="primary" hidden>NEXT BOARD</button></div></section>
 <div id="complete" class="overlay"><div><div class="big">ROUND COMPLETE!</div><div class="msg">All words matched!</div><button id="nextRound" class="primary">PLAY NEXT ROUND</button><button id="completeMenu" class="pink">MAIN MENU</button></div></div>
 <div id="gameOver" class="overlay"><div><div class="big" style="color:#ef6689">GAME OVER</div><div class="msg">Nice try, your grandma would be proud</div><button id="again" class="primary">PLAY AGAIN</button><button id="overMenu" class="pink">MAIN MENU</button></div></div>
 </main><script>
-(function(){"use strict";function E(x){return document.getElementById(x)}var ta=E("words"),menu=E("menu"),game=E("game"),soundOn=true,audioCtx=null,vocab=[],order=[],setIndex=0,score=0,lives=3,answered=0,round=1,SET=12,lang="de-DE";
+(function(){"use strict";function E(x){return document.getElementById(x)}var ta=E("words"),menu=E("menu"),game=E("game"),soundOn=true,audioCtx=null,vocab=[],order=[],setIndex=0,score=0,lives=3,answered=0,round=1,SET=6,lang="de-DE";
 var LIB={"de-DE":{"Basics":[["hallo","hello"],["ja","yes"],["nein","no"],["bitte","please"],["danke","thank you"],["gut","good"],["schlecht","bad"],["groß","big"]],"Family":[["die Mutter","mother"],["der Vater","father"],["die Schwester","sister"],["der Bruder","brother"],["die Eltern","parents"],["die Familie","family"],["die Oma","grandmother"],["der Opa","grandfather"]],"Food & Drink":[["der Apfel","apple"],["das Brot","bread"],["der Käse","cheese"],["das Wasser","water"],["die Milch","milk"],["der Reis","rice"],["das Ei","egg"],["essen","to eat"]],"School":[["die Schule","school"],["der Lehrer","teacher"],["der Schüler","student"],["das Buch","book"],["der Stift","pen"],["der Tisch","table"],["lesen","to read"],["lernen","to learn"]],"Common Verbs":[["sein","to be"],["haben","to have"],["gehen","to go"],["kommen","to come"],["machen","to do / make"],["sehen","to see"],["sprechen","to speak"],["spielen","to play"]]},"es-ES":{"Basics":[["hola","hello"],["sí","yes"],["no","no"],["por favor","please"],["gracias","thank you"],["bueno","good"],["malo","bad"],["grande","big"]],"Family":[["la madre","mother"],["el padre","father"],["la hermana","sister"],["el hermano","brother"],["los padres","parents"],["la familia","family"],["la abuela","grandmother"],["el abuelo","grandfather"]],"Food & Drink":[["la manzana","apple"],["el pan","bread"],["el queso","cheese"],["el agua","water"],["la leche","milk"],["el arroz","rice"],["el huevo","egg"],["comer","to eat"]],"School":[["la escuela","school"],["el profesor","teacher"],["el estudiante","student"],["el libro","book"],["el bolígrafo","pen"],["la mesa","table"],["leer","to read"],["aprender","to learn"]],"Common Verbs":[["ser","to be"],["tener","to have"],["ir","to go"],["venir","to come"],["hacer","to do"],["ver","to see"],["hablar","to speak"],["jugar","to play"]]},"da-DK":{"Basics":[["hej","hello"],["ja","yes"],["nej","no"],["tak","thank you"],["god","good"],["dårlig","bad"],["stor","big"],["lille","small"]],"Family":[["mor","mother"],["far","father"],["søster","sister"],["bror","brother"],["forældre","parents"],["familie","family"],["bedstemor","grandmother"],["bedstefar","grandfather"]],"Food & Drink":[["æble","apple"],["brød","bread"],["ost","cheese"],["vand","water"],["mælk","milk"],["ris","rice"],["æg","egg"],["spise","to eat"]],"School":[["skole","school"],["lærer","teacher"],["elev","student"],["bog","book"],["pen","pen"],["bord","table"],["læse","to read"],["lære","to learn"]],"Common Verbs":[["være","to be"],["have","to have"],["gå","to go"],["komme","to come"],["gøre","to do"],["se","to see"],["tale","to speak"],["spille","to play"]]},"en-US":{"Basics":[["hello","hola"],["yes","sí"],["no","no"],["please","por favor"],["thank you","gracias"],["good","bueno"],["bad","malo"],["big","grande"]],"Family":[["mother","madre"],["father","padre"],["sister","hermana"],["brother","hermano"],["parents","padres"],["family","familia"],["grandmother","abuela"],["grandfather","abuelo"]],"Food & Drink":[["apple","manzana"],["bread","pan"],["cheese","queso"],["water","agua"],["milk","leche"],["rice","arroz"],["egg","huevo"],["to eat","comer"]],"School":[["school","escuela"],["teacher","profesor"],["student","estudiante"],["book","libro"],["pen","bolígrafo"],["table","mesa"],["to read","leer"],["to learn","aprender"]],"Common Verbs":[["to be","ser"],["to have","tener"],["to go","ir"],["to come","venir"],["to do","hacer"],["to see","ver"],["to speak","hablar"],["to play","jugar"]]}};
 var EXTRA={
 "de-DE":{"Home":[["das Haus","house"],["das Zimmer","room"],["die Küche","kitchen"],["das Bad","bathroom"],["das Bett","bed"],["die Tür","door"],["das Fenster","window"],["der Stuhl","chair"]],"Hobbies":[["Musik hören","to listen to music"],["Fußball spielen","to play football"],["lesen","to read"],["zeichnen","to draw"],["tanzen","to dance"],["singen","to sing"],["schwimmen","to swim"],["fotografieren","to take photos"]],"Daily Routine":[["aufstehen","to get up"],["frühstücken","to eat breakfast"],["zur Schule gehen","to go to school"],["lernen","to study"],["zu Mittag essen","to eat lunch"],["nach Hause gehen","to go home"],["zu Abend essen","to eat dinner"],["schlafen gehen","to go to bed"]],"Places":[["die Stadt","city"],["der Park","park"],["der Bahnhof","train station"],["der Supermarkt","supermarket"],["das Kino","cinema"],["das Krankenhaus","hospital"],["das Restaurant","restaurant"],["der Strand","beach"]],"Clothes":[["das Hemd","shirt"],["die Hose","trousers"],["das Kleid","dress"],["die Schuhe","shoes"],["die Jacke","jacket"],["der Pullover","sweater"],["die Mütze","hat"],["die Socken","socks"]],"Weather":[["sonnig","sunny"],["bewölkt","cloudy"],["windig","windy"],["kalt","cold"],["warm","warm"],["heiß","hot"],["es regnet","it is raining"],["es schneit","it is snowing"]],"Adjectives":[["glücklich","happy"],["traurig","sad"],["schnell","fast"],["langsam","slow"],["jung","young"],["alt","old"],["schön","beautiful"],["interessant","interesting"]],"Numbers & Time":[["eins","one"],["zwei","two"],["drei","three"],["zehn","ten"],["heute","today"],["morgen","tomorrow"],["gestern","yesterday"],["die Uhr","clock / time"]]},
@@ -77,7 +98,7 @@ if("speechSynthesis"in window){
   setTimeout(loadVoices,150);
   setTimeout(loadVoices,700)
 }
-function speak(t){if(!soundOn)return false;window.parent.postMessage({type:"BT_MATCH_SPEAK",text:t,language:lang},location.origin);return true;}function originalSpeak(t){
+function speak(t){if(!soundOn)return false;window.parent.postMessage({type:"BT_MATCH_SPEAK",text:t,language:lang},location.origin);return window.parent===window?originalSpeak(t):true;}function originalSpeak(t){
   if(!soundOn||!("speechSynthesis"in window))return false;
   loadVoices();
   var v=voiceFor(lang);
@@ -95,9 +116,101 @@ function speak(t){if(!soundOn)return false;window.parent.postMessage({type:"BT_M
 }
 function hud(){E("score").textContent=score;E("lives").textContent="❤".repeat(Math.max(0,lives));var totalSets=Math.ceil(vocab.length/SET),setNo=Math.floor(setIndex/SET)+1,from=setIndex+1,to=Math.min(setIndex+SET,vocab.length);E("progress").textContent="SET "+setNo+" OF "+totalSets+" · WORDS "+from+"–"+to+" OF "+vocab.length}
 function start(){resetPause();var a=parse(ta.value);if(a.length<4){E("error").textContent="Please add at least 4 word pairs.";window.parent.postMessage({type:"BT_MATCH_START_FAILED"},location.origin);return}E("error").textContent="";lang=E("language").value;vocab=a.map(function(p,i){return{id:i,target:p[0],english:p[1]}});order=shuffle(vocab);setIndex=0;score=0;lives=3;answered=0;round=1;menu.classList.remove("active");game.classList.add("active");E("gameOver").classList.remove("show");E("complete").classList.remove("show");renderSet()}
-function renderSet(){var set=order.slice(setIndex,setIndex+SET),left=E("english"),right=E("targetWords");left.innerHTML="";right.innerHTML="";E("status").textContent="";var number={};set.forEach(function(v,i){number[v.id]=i+1;var r=document.createElement("div");r.className="row";r.innerHTML='<div class="num">'+(i+1)+'</div><div class="word"></div>';r.querySelector(".word").textContent=v.english;left.appendChild(r)});shuffle(set).forEach(function(v){var r=document.createElement("div");r.className="row";var w=document.createElement("div");w.className="word";w.textContent=v.target;var inp=document.createElement("input");inp.className="answer";inp.inputMode="numeric";inp.maxLength=2;inp.setAttribute("aria-label","Number for "+v.target);r.appendChild(w);r.appendChild(inp);var submit=document.createElement("button");submit.type="button";submit.className="mobile-submit";submit.textContent="✓";submit.setAttribute("aria-label","Confirm number for "+v.target);r.appendChild(submit);right.appendChild(r);submit.addEventListener("click",function(){inp.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",bubbles:true}))});inp.addEventListener("keydown",function(e){if(e.key!=="Enter"||paused||lives<=0||inp.disabled)return;e.preventDefault();var val=parseInt(inp.value,10);if(!val)return;if(val===number[v.id]){inp.disabled=true;r.classList.add("correct");score+=10;answered++;good();speak(v.target);E("status").textContent="✓ "+v.target;E("status").style.color="#78df62";hud();later(checkSet,250)}else{inp.value="";r.classList.add("wrong");bad();lives--;E("status").textContent="✗ TRY AGAIN";E("status").style.color="#ff8194";hud();later(function(){r.classList.remove("wrong");if(lives>0)inp.focus()},350);if(lives<=0)gameOver()}})});hud();var first=right.querySelector("input");if(first&&!window.matchMedia("(max-width:720px)").matches)first.focus()}
-function checkSet(){var set=order.slice(setIndex,setIndex+SET);var locked=E("targetWords").querySelectorAll("input:disabled").length;if(locked===set.length){var finished=Math.floor(setIndex/SET)+1;setIndex+=SET;if(setIndex>=order.length){E("complete").classList.add("show")}else{E("status").textContent="✓ SET "+finished+" COMPLETE!";E("status").style.color="#78df62";later(renderSet,850)}}}
-function gameOver(){E("gameOver").classList.add("show")}
+let drag=null, matched=new Set(), boardSize=0;
+function cancelDrag(){
+ if(!drag)return;
+ drag.card.style.transform="";
+ drag.card.classList.remove("dragging");
+ drag=null;
+}
+function renderSet(){
+ cancelDrag();
+ matched.clear();
+ const set=order.slice(setIndex,setIndex+SET);
+ boardSize=set.length;
+ E("tower").style.setProperty("--pairs",boardSize);
+ E("tower").replaceChildren();
+ E("rescue").style.setProperty("--rise","0%");
+ E("rescue").classList.remove("rescued");
+ E("nextBoard").hidden=true;
+ E("status").textContent="";
+ for(const [column,words,side,key] of [
+   ["english",set,"prompt","english"],["targetWords",shuffle(set),"target","target"]
+ ]){
+   E(column).replaceChildren(...words.map(pair=>{
+     const card=document.createElement("div");
+     card.className="match-card";
+     card.dataset.side=side;
+     card.dataset.pair=pair.id;
+     card.textContent=pair[key];
+     return card;
+   }));
+ }
+ hud();
+}
+function matchCards(card,other){
+ if(!other||card.dataset.side===other.dataset.side)return;
+ const id=Number(card.dataset.pair);
+ if(card.dataset.pair!==other.dataset.pair){
+   E("status").textContent="NOPE";
+   E("status").style.color="#ff6a80";
+   card.animate([{background:"#a92e48"},{background:""}],{duration:350});
+   const notice=++noticeId;
+   later(()=>{if(notice===noticeId)E("status").textContent=""},650);
+   bad();
+   return;
+ }
+ noticeId++;
+ matched.add(id);
+ const word=vocab[id].target;
+ const from=other.getBoundingClientRect();
+ card.classList.add("matched");other.classList.add("matched");
+ const block=document.createElement("div");
+ block.className="tower-block";
+ block.textContent=word;
+ E("tower").append(block);
+ const to=block.getBoundingClientRect();
+ block.animate([{transform:`translate(${from.left-to.left}px,${from.top-to.top}px)`,opacity:.4},{transform:"none",opacity:1}],{duration:350});
+ E("rescue").style.setProperty("--rise",matched.size/boardSize*65+"%");
+ score+=10;answered++;
+ E("status").textContent="✓ "+word;
+ E("status").style.color="#78df62";
+ good();speak(word);hud();
+ if(matched.size===boardSize)later(()=>{
+   E("rescue").classList.add("rescued");
+   E("status").textContent="CAT RESCUED!";
+   E("nextBoard").textContent=setIndex+SET>=order.length?"PLAY NEXT ROUND":"NEXT BOARD";
+   E("nextBoard").hidden=false;
+ },400);
+}
+let noticeId=0;
+E("nextBoard").onclick=function(){
+ setIndex+=SET;
+ if(setIndex>=order.length){round++;order=shuffle(vocab);setIndex=0}
+ renderSet();
+};
+const matchBoard=E("board");
+matchBoard.addEventListener("pointerdown",e=>{
+ const card=e.target.closest(".match-card:not(.matched)");
+ if(!card||drag||paused||e.button!==0)return;
+ drag={card,id:e.pointerId,x:e.clientX,y:e.clientY};
+ card.classList.add("dragging");
+ matchBoard.setPointerCapture(e.pointerId);
+});
+matchBoard.addEventListener("pointermove",e=>{
+ if(drag?.id!==e.pointerId)return;
+ drag.card.style.transform=`translate(${e.clientX-drag.x}px,${e.clientY-drag.y}px)`;
+});
+matchBoard.addEventListener("pointerup",e=>{
+ if(drag?.id!==e.pointerId)return;
+ const card=drag.card;
+ cancelDrag();
+ const target=document.elementFromPoint(e.clientX,e.clientY)?.closest(".match-card:not(.matched)");
+ if(!paused)matchCards(card,target);
+});
+for(const type of ["pointercancel","lostpointercapture"]){
+ matchBoard.addEventListener(type,e=>{if(drag?.id===e.pointerId)cancelDrag()});
+}
 function toMenu(){resetPause();E("testStart").hidden=false;game.classList.remove("active");E("gameOver").classList.remove("show");E("complete").classList.remove("show");window.parent.postMessage({type:"BT_MATCH_CANCEL_SPEECH"},location.origin);window.parent.postMessage({type:"BT_MATCH_MENU"},location.origin)}
 E("play").onclick=start;E("again").onclick=start;E("restart").onclick=start;E("mainMenu").onclick=toMenu;E("overMenu").onclick=toMenu;E("completeMenu").onclick=toMenu;E("nextRound").onclick=function(){round++;order=shuffle(vocab);setIndex=0;E("complete").classList.remove("show");renderSet()};E("swap").onclick=function(){var a=parse(ta.value);ta.value=a.map(function(x){return x[1]+"\t"+x[0]}).join("\n");preview()};E("language").onchange=function(){cats(false);E("category").value="custom";lang=this.value;updateVoiceCheck()};E("category").onchange=loadCat;ta.oninput=function(){E("category").value="custom";preview()};E("sound").onclick=function(){soundOn=!soundOn;this.textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF"};E("testVoice").onclick=function(){lang=E("language").value;var samples={"de-DE":"Guten Morgen","es-ES":"Buenos días","da-DK":"Godmorgen","en-US":"Good morning"};var v=voiceFor(lang);if(!v){updateVoiceCheck();return}var u=new SpeechSynthesisUtterance(samples[lang]||"Hello");u.voice=v;u.lang=v.lang;u.rate=.82;window.speechSynthesis.cancel();window.speechSynthesis.speak(u)};
 var paused=false, matchTimers=new Set();
@@ -111,11 +224,12 @@ function later(callback,delay){
  matchTimers.add(timer);
 }
 function resetPause(){
+ cancelDrag();
  matchTimers.forEach(clearTimeout);matchTimers.clear();
  paused=false;E("board").inert=false;E("pause").textContent="PAUSE";
 }
 E("pause").onclick=function(){
- paused=!paused;E("board").inert=paused;this.textContent=paused?"RESUME":"PAUSE";
+ paused=!paused;cancelDrag();E("board").inert=paused;this.textContent=paused?"RESUME":"PAUSE";
 };
 cats(false);preview();
 E("testStart").onclick=function(){E("testStart").hidden=true;start()};
