@@ -1,0 +1,257 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Word Match Pixel V1.4 Expanded Setup</title><style>
+*{box-sizing:border-box}body{margin:0;background:#16264e;color:#fff;font-family:"Courier New",monospace}.app{width:min(1050px,calc(100vw - 12px));margin:6px auto;padding:10px;background:#203a67;border:5px solid #0c1938;box-shadow:0 0 0 4px #f2d64b}.logo{text-align:center;font:900 clamp(28px,4vw,44px) "Courier New";letter-spacing:4px;color:#f2d64b;text-shadow:4px 4px #0c1938;margin:4px}.screen{display:none}.screen.active{display:block}.grid{display:grid;grid-template-columns:1.35fr .75fr;gap:12px}.card{background:#f6e8bd;color:#15254a;border:4px solid #101a43;padding:12px;box-shadow:inset 0 0 0 3px #fff7dc}h2{color:#26713d;font-size:18px;margin:0 0 8px}.help{color:#294361;font-size:13px;font-weight:bold;line-height:1.4}textarea,select{width:100%;background:#fff8dc;color:#15254a;border:4px solid #101a43;padding:9px;font:700 14px "Courier New"}textarea{height:min(38vh,285px);min-height:180px}button{font:900 14px "Courier New";padding:10px 14px;margin:4px;border:4px solid #101a43;background:#5cc7d8;color:#101a43;cursor:pointer;box-shadow:inset -3px -3px #2c7794,inset 3px 3px #c4ffff}.primary{background:#78df62}.yellow{background:#f2d64b}.pink{background:#ef6689}.wide{width:100%;font-size:18px}.preview{margin-top:8px;padding:9px;background:#d9eff1;color:#19324e;border:3px solid #19324e;font-size:12px}.error{color:#b9223e;min-height:18px;font-weight:bold}.voiceCheck{margin-top:10px;padding:10px;background:#d9eff1;color:#19324e;border:3px solid #19324e;font-size:12px;font-weight:bold;line-height:1.55}.voiceGood{color:#26713d}.voiceBad{color:#b9223e}.voiceWait{color:#795d00}.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:7px 0;font:900 14px "Courier New";text-shadow:2px 2px #0c1938}.setBoard{background:#f2d64b;color:#15254a;border:4px solid #101a43;padding:8px 14px;text-shadow:none;box-shadow:inset 0 0 0 2px #fff1a1;text-align:center}.board{background:#112c3d;border:4px solid #0c1938;padding:14px;min-height:470px}.columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}.colTitle{text-align:center;background:#f2d64b;color:#15254a;border:4px solid #101a43;padding:8px;font-weight:900;margin-bottom:10px}.row{min-height:52px;margin:8px 0;display:flex;align-items:center;border:3px solid #0c1938;background:#f6e8bd;color:#15254a;font-weight:900;font-size:clamp(15px,2vw,20px);box-shadow:inset 0 0 0 2px #fff7dc}.num{width:48px;align-self:stretch;display:flex;align-items:center;justify-content:center;background:#5cc7d8;border-right:3px solid #0c1938;font-size:20px}.word{padding:8px 12px;flex:1}.answer{width:58px;height:38px;margin-right:7px;border:3px solid #101a43;background:#fff;text-align:center;font:900 20px "Courier New";color:#15254a}.row.correct{background:#a8ed91}.row.correct .answer{background:#d9ffd0}.row.wrong{animation:shake .18s linear 2;background:#ff9cae}@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}.status{text-align:center;min-height:36px;font:900 20px "Courier New";padding:6px}.buttons{text-align:center}.overlay{display:none;position:fixed;inset:0;background:#0c1938e8;z-index:10;align-items:center;justify-content:center;text-align:center}.overlay.show{display:flex}.big{font:900 clamp(30px,5vw,50px) "Courier New";color:#78df62;text-shadow:4px 4px #000}.msg{font:900 22px "Courier New";margin:12px}.app.expanded{position:fixed;inset:0;z-index:9999;width:100vw;height:100vh;margin:0;max-width:none;border:0;box-shadow:none;overflow:auto}@media(max-width:720px){.grid{grid-template-columns:1fr}.columns{gap:8px}.board{padding:7px}.row{font-size:14px}.num{width:36px}.answer{width:46px}}
+.mobile-submit{display:none}
+/* Mobile adaptation; desktop rules stay intact. */
+@media(max-width:720px){body{overflow-x:hidden}.app{width:calc(100% - 8px);margin:4px auto;padding:6px;border-width:3px;box-shadow:0 0 0 2px #f2d64b}.logo{font-size:clamp(21px,6vw,31px);letter-spacing:1px}.card{min-width:0;padding:9px}select,textarea{font-size:16px}.hud{flex-wrap:wrap;font-size:12px}.setBoard{padding:5px 8px}.board{min-height:0;padding:5px}.columns{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px}.colTitle{font-size:clamp(10px,2.8vw,13px);padding:6px 2px;margin-bottom:5px;border-width:2px}.row{min-height:51px;margin:5px 0;font-size:clamp(11px,3vw,14px);border-width:2px;min-width:0}.num{width:26px;flex:none;font-size:15px;border-right-width:2px}.word{padding:5px 3px;min-width:0;overflow-wrap:anywhere;line-height:1.2}.answer{width:38px;min-width:38px;height:38px;margin:0 3px 0 1px;border-width:2px;font-size:18px;border-radius:0}.answer:focus{outline:3px solid #5cc7d8;outline-offset:0}.mobile-submit{display:block;flex:none;margin:0 2px 0 0;padding:0;width:27px;height:38px;border-width:2px;font-size:17px;background:#78df62;box-shadow:none}.row.correct .mobile-submit{display:none}.buttons button{padding:8px 5px;font-size:clamp(10px,2.7vw,13px);margin:2px}.status{font-size:16px;min-height:29px}.overlay .msg{font-size:17px;padding:8px}textarea{height:23dvh;min-height:135px}}
+@media(max-width:370px){.num{width:23px}.answer{width:32px;min-width:32px}.mobile-submit{width:24px}.word{font-size:11px}}
+/* LINK_D1: isolated teacher/student entry styling */
+.share-panel{margin-top:9px;padding:9px;background:#d9eff1;color:#19324e;border:3px solid #19324e;font-size:12px;font-weight:bold;line-height:1.5;overflow-wrap:anywhere}
+.share-panel button{max-width:100%}#copyStudentLink{display:none}#studentEntry{display:none;text-align:center;max-width:650px;margin:12px auto;padding:18px;background:#f6e8bd;color:#15254a;border:4px solid #101a43}#studentEntry h2{font-size:clamp(20px,4vw,30px)}#studentEntry .student-meta{margin:12px 0;font-weight:bold;overflow-wrap:anywhere}body.studentMode #menu{display:none!important}body.studentMode #studentEntry{display:block}body.studentMode #studentEntry.playing{display:none}body.studentMode #game.active{display:block}body.studentMode #mainMenu,body.studentMode #overMenu,body.studentMode #completeMenu{display:none}
+#menu,#studentEntry{display:none!important} .app{max-width:1100px} .logo{font-size:clamp(20px,3vw,30px)} 
+body{background:#203a67}
+.app{width:100%;max-width:none;margin:0;padding:4px 4px env(safe-area-inset-bottom);border:0;box-shadow:none}
+.logo{color:#78df62}
+#game .buttons{display:grid;grid-template-columns:repeat(4,minmax(0,105px));justify-content:center;gap:5px}
+#game .buttons button{margin:0;min-height:44px;padding:4px 2px;font-size:clamp(9px,2.3vw,13px)}
+.match-instruction{background:#f2d64b;color:#101a43;text-align:center;padding:7px;margin-top:5px;font-weight:bold}
+#board[inert]{opacity:.55}
+@media(max-width:720px){#game .mobile-submit{min-width:28px;min-height:44px}#game .columns>div{min-width:0}}
+
+.match-layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(150px,1fr);gap:10px}
+.match-layout .columns{grid-area:1 / 1;min-width:0}
+.rescue{grid-area:1 / 2;position:relative;min-height:240px;background:#14284a;border:3px solid #0c1938;--rise:0%}
+.park{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tree{position:absolute;right:0;bottom:0;width:66%;height:100%;pointer-events:none}
+.tree svg{width:100%;height:100%}
+.platform{position:absolute;bottom:65%;left:49%;width:30%;height:5px;background:#8f5b38}
+.cat{position:absolute;bottom:5px;left:45%;width:clamp(18px,3vw,30px);line-height:0}
+.girl{position:absolute;bottom:var(--rise);left:50%;transform:translateX(-50%);width:clamp(23px,4vw,44px);line-height:0;transition:bottom .35s;z-index:1}
+.girl svg,.cat svg{width:100%;height:auto}
+.hug,.rescued .cat{display:none}
+.rescued .hug{display:block;position:absolute;top:36%;left:40%;width:68%;animation:pickup .35s ease-out}
+@keyframes pickup{from{transform:translate(45%,35%)}to{transform:none}}
+.tower{position:absolute;bottom:0;left:25%;width:50%;height:65%;display:flex;flex-direction:column-reverse;align-items:stretch}
+.tower-block{height:calc(100% / var(--pairs,6));background:repeating-linear-gradient(0deg,#855035 0 2px,#a36c43 2px 6px);color:#332117;border:2px solid #4e3022;text-align:center;font-size:11px;overflow:hidden}
+.tower-block{display:flex;align-items:center;justify-content:center}
+.tower-block span{display:block;width:90%;background:#f3d8a6;padding:0 2px;font-size:clamp(12px,2vw,20px);font-weight:900;line-height:1.05;overflow-wrap:anywhere}
+@media(max-width:720px){.tower-block span{font-size:clamp(10px,3vw,14px)}}
+.match-card{position:relative;display:grid;place-items:center;min-height:44px;padding:3px;margin:3px 0;background:#f6e8bd;color:#101a43;border:2px solid #101a43;font-weight:bold;text-align:center;overflow-wrap:anywhere;touch-action:none;user-select:none;cursor:grab}
+.match-card[data-side=target]{background:#9edfed}
+.match-card.dragging{z-index:5;pointer-events:none}
+.match-card.matched{visibility:hidden}
+.rescue-result{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#10192edd;padding:12px}
+.rescue-result[hidden]{display:none}
+.rescue-result-card{display:grid;justify-items:center;gap:8px;width:min(100%,490px);padding:12px;border:4px solid #f2d64b;background:#203a67}
+.rescue-result-card h2{margin:0;color:#f2d64b;text-align:center}
+.rescue-portrait{display:block;width:100%;max-height:55dvh;border:3px solid #101a43}
+#nextBoard{margin:0;min-height:44px}
+@media(max-width:720px){
+ .match-layout{display:flex;flex-direction:column;gap:4px}
+ .rescue{min-height:116px}
+ .match-card{font-size:clamp(11px,3.5vw,15px)}
+}
+.shell-managed .logo,.shell-managed #game .buttons,.embedded #testStart{display:none!important}
+</style></head><body><main class="app"><div class="logo">VOCABULARY MATCH</div><button id="testStart" class="primary">TEST VOCABULARY MATCH</button>
+<section id="game" class="screen"><div class="buttons"><button id="pause" class="yellow">PAUSE</button><button id="restart">RESTART</button><button id="mainMenu" class="pink">MAIN MENU</button><button id="sound">🔊 SOUND ON</button></div><div class="match-instruction">DRAG A WORD ONTO ITS TRANSLATION TO SAVE BOB THE CAT</div><div class="hud"><div>SCORE <span id="score">0</span></div><div id="progress" class="setBoard">SET 1</div></div><div class="board" id="board"><div class="match-layout"><div id="rescue" class="rescue" aria-label="Cat rescue tower"><svg class="park" viewBox="0 0 160 100" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true"><path fill="#a6d9e5" d="M0 0h160v100H0z"/><path fill="#fff2cd" d="M10 15h8v-4h10v4h8v4H10zm83-8h13V3h13v4h9v4H93z"/><path fill="#6fa961" d="M0 59h17v-8h22v5h16v-9h24v8h28v-6h28v7h25v44H0z"/><path fill="#8cc367" d="M0 69h160v31H0z"/><path fill="#dcbd89" d="M0 95h37v-8h13v-6h20v-6h29v6H81v7H67v12H0z"/><path fill="#456d40" d="M6 85h2v4H6zm27-10h2v4h-2zm89 16h2v4h-2zm26-12h2v4h-2z"/><path fill="#f5e5a1" d="M12 76h3v2h-3zm108 7h3v2h-3zm27 10h3v2h-3z"/><path fill="#8b5239" d="M9 63h18v3H9zm-2 4h22v3H7zm3 3h2v5h-2zm14 0h2v5h-2z"/></svg><div class="tree"><svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true"><path fill="#59392c" d="M43 64H28v-7h6V31h-7v-5H14v-6h15v4h8V12h7v11h8v-7h7v13H46v28h5v7z"/><path fill="#ad7548" d="M39 59h-5v-4h5V30h-9v-5h9V14h4v45z"/><path fill="#23594b" d="M2 8h6V4h13V1h11v4h14V1h10v5h7v15h-5v6H43v-5H28v5H12v-4H3z"/><path fill="#518d43" d="M7 9h9V5h12v4h12V6h15v4h5v7H48v4H33v-4H20v5h-8v-6H7z"/><path fill="#9ebe55" d="M11 9h13v4H11zM36 10h17v4H36zM24 14h8v4h-8z"/></svg></div><div class="platform"><span class="cat"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/><path fill="#754b38" d="M5 3h1v2H5zm5 0h1v2h-1zm3 7h1v1h-1z"/><path fill="#f6b6b9" d="M3 8h2v1H3zm8 0h2v1h-2z"/><path fill="#d9c5ae" d="M5 12h1v1H5zm4 0h1v1H9z"/></svg></span></div><div class="girl" id="rescueGirl"><svg viewBox="0 0 16 24" shape-rendering="crispEdges" aria-hidden="true"><path fill="#231c31" d="M4 0h8v2h2v10h-2v2H4v-2H2V3h2z"/><path fill="#514259" d="M4 2h8v2H4z"/><path fill="#ffd4b5" d="M5 6h6v1h2v4h-2v2H5v-2H3V8h2zM1 14h3v5H1zM12 14h3v5h-3z"/><path fill="#271d30" d="M5 8h1v2H5zM10 8h1v2h-1zM3 21h4v3H3zM9 21h4v3H9z"/><path fill="#fff1db" d="M3 13h10v4H3z"/><path fill="#ed649b" d="M4 13h2v3h4v-3h2v8H9v-2H7v2H4z"/><path fill="#ffabc8" d="M6 16h4v2H6z"/><path fill="#be427a" d="M4 17h2v3H4zm6 2h2v2h-2z"/><path fill="#ffe5f0" d="M5 15h1v1H5zm5 0h1v1h-1z"/><path fill="#f49e9e" d="M4 10h2v1H4zm6 0h2v1h-2z"/><path fill="#654d65" d="M3 22h3v1H3zm7 0h3v1h-3z"/><path fill="#fff4dd" d="M7 11h2v1H7z"/></svg><span class="hug"><svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true"><path fill="#33263a" d="M1 0h4v2h6V0h4v8h-2v2h2v3H3v-3H1z"/><path fill="#b87b4f" d="M2 1h2v2h8V1h2v7H2zM12 9h2v3h-2z"/><path fill="#f4adc1" d="M2 2h2v3H2zM12 2h2v3h-2z"/><path fill="#fff3dc" d="M6 4h4v2h3v3h-2v4H5V9H3V6h3z"/><path fill="#33263a" d="M4 6h2v1H4zM10 6h2v1h-2zM7 8h2v1H7z"/><path fill="#754b38" d="M5 3h1v2H5zm5 0h1v2h-1zm3 7h1v1h-1z"/><path fill="#f6b6b9" d="M3 8h2v1H3zm8 0h2v1h-2z"/><path fill="#d9c5ae" d="M5 12h1v1H5zm4 0h1v1H9z"/></svg></span></div><div id="tower" class="tower"></div></div><div class="columns"><div><div class="colTitle">ENGLISH</div><div id="english"></div></div><div><div class="colTitle" id="targetTitle">TARGET LANGUAGE</div><div id="targetWords"></div></div></div></div><div id="status" class="status" role="status"></div><div id="rescueResult" class="rescue-result" hidden><div class="rescue-result-card"><h2>BOB THE CAT IS SAFE</h2><svg class="rescue-portrait" viewBox="0 0 160 104" shape-rendering="crispEdges" role="img" aria-label="A smiling girl in pink overalls hugs Bob, her smiling brown-and-white cat">
+<path fill="#b0e0de" d="M0 0h160v104H0z"/><path fill="#86bba8" d="M0 76h160v28H0z"/><path fill="#fff1b4" d="M20 16h3v-3h3v3h3v3h-3v3h-3v-3h-3zm107 9h3v-3h3v3h3v3h-3v3h-3v-3h-3zM14 54h4v4h-4zm124 9h4v4h-4z"/>
+<path fill="#30283b" d="M48 12h34v4h9v7h7v47h-9v8H38v-8h-7V30h6V20h11z"/><path fill="#59465b" d="M48 17h31v4h9v7H64v-5H48zm-11 17h6v30h-6zm52 4h5v28h-5z"/>
+<path fill="#ffd3ad" d="M52 32h10v-5h14v7h9v25h-5v7H52v-5h-6V41h6z"/><path fill="#f2ab92" d="M48 52h8v4h-8zm27 0h8v4h-8zM59 63h14v9H59z"/>
+<path fill="#382635" d="M51 46h3v-3h6v3h3v3h-5v-3h-3v3h-4zm20 0h3v-3h6v3h3v3h-5v-3h-3v3h-4zM60 54h14v5h-3v3h-8v-3h-3z"/><path fill="#fff6eb" d="M62 55h10v2H62z"/>
+<path fill="#fff3df" d="M43 73h42v6h8v25H32V87h5V78h6z"/><path fill="#c64780" d="M44 72h7v15h24V72h7v15h8v17H36V91h8z"/><path fill="#f77bad" d="M47 74h3v15h26V75h4v15h5v14H41V92h6z"/><path fill="#ffe4b7" d="M48 89h4v4h-4zm24 0h4v4h-4z"/>
+<path fill="#49303d" d="M91 45h12v5h14v-5h12v24h-4v8h7v15h-7v7H86V78h-5V61h5V49h5z"/><path fill="#bb8156" d="M90 50h10v5h20v-5h5v20h-6v9h8v12h-8v5H90V75h-5V63h5z"/><path fill="#f2a9af" d="M91 52h6v8h-6zm29 0h4v8h-4z"/><path fill="#fff2dc" d="M103 57h8v8h10v9h-5v7h7v13H91V79h5v-5h-7v-8h14z"/><path fill="#895738" d="M99 56h3v6h-3zm14 0h3v6h-3z"/><path fill="#49303d" d="M91 67h3v-3h6v3h3v2H91zm21 0h3v-3h5v3h3v2h-11zm-8 4h7v3h-2v3h-4v-2h-3v-2h2z"/><path fill="#f3afb2" d="M91 71h6v3h-6zm25 0h6v3h-6z"/>
+<path fill="#e6a38f" d="M75 91h18v-4h13v5h-5v5H76z"/><path fill="#ffd3ad" d="M76 90h16v-4h13v4h-6v4H76z"/>
+</svg><button id="nextBoard" class="primary">NEXT BOARD</button></div></div></div></section>
+</main><script>
+(function(){"use strict";
+const E=id=>document.getElementById(id);
+const game=E("game"), SET=6;
+const sampleVocab=[["gucken","to watch, to look at"],["fahren","to drive"],["essen","to eat"],["trinken","to drink"],["schlafen","to sleep"],["lesen","to read"],["schreiben","to write"],["sprechen","to speak"],["gehen","to go"],["kommen","to come"],["spielen","to play"],["lernen","to learn"]].map(([target,prompt],id)=>({id,target,english:prompt}));
+let vocab=sampleVocab,lang="de-DE",subscriber=null,disposed=false,initialized=false;
+let soundOn=true,audioCtx=null,order=[],setIndex=0,score=0;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function audio(){if(!soundOn)return null;try{var A=window.AudioContext||window.webkitAudioContext;if(!A)return null;if(!audioCtx)audioCtx=new A();if(audioCtx.state==="suspended")audioCtx.resume();return audioCtx}catch(e){return null}}function beep(f,d){var a=audio();if(!a)return;var o=a.createOscillator(),g=a.createGain(),n=a.currentTime;o.type="square";o.frequency.value=f;g.gain.setValueAtTime(.035,n);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(a.destination);o.start();o.stop(n+d)}function good(){beep(520,.06);setTimeout(function(){beep(780,.08)},65)}function bad(){beep(150,.16)}function speak(word){
+ if(!soundOn||!("speechSynthesis" in window))return;
+ if(subscriber){subscriber({type:"BT_MATCH_SPEAK",text:word});return}
+ const voices=window.speechSynthesis.getVoices();
+ const voice=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase())||
+   voices.find(v=>v.lang.toLowerCase().split("-")[0]===lang.split("-")[0]);
+ if(!voice)return;
+ const utterance=new SpeechSynthesisUtterance(word);
+ utterance.voice=voice;
+ utterance.lang=voice.lang;
+ utterance.rate=.82;
+ window.speechSynthesis.cancel();
+ window.speechSynthesis.speak(utterance);
+}
+function hud(){subscriber?.({type:"BT_MATCH_STATE",...state()});E("score").textContent=score;var totalSets=Math.ceil(vocab.length/SET),setNo=Math.floor(setIndex/SET)+1,from=setIndex+1,to=Math.min(setIndex+SET,vocab.length);E("progress").textContent="SET "+setNo+" OF "+totalSets+" · WORDS "+from+"–"+to+" OF "+vocab.length}
+function start(){
+ resetPause();
+ order=shuffle(vocab);setIndex=0;score=0;
+ E("testStart").hidden=true;
+ game.classList.add("active");
+ renderSet();
+}
+let drag=null, matched=new Set(), boardSize=0;
+window.addEventListener("blur",cancelDrag);
+function cancelDrag(){
+ if(!drag)return;
+ const {card,id}=drag;
+ drag=null;
+ card.style.transform="";
+ card.classList.remove("dragging");
+ if(matchBoard.hasPointerCapture(id))matchBoard.releasePointerCapture(id);
+}
+function renderSet(){
+ cancelDrag();
+ matched.clear();
+ const set=order.slice(setIndex,setIndex+SET);
+ boardSize=set.length;
+ E("tower").style.setProperty("--pairs",boardSize);
+ E("tower").replaceChildren();
+ E("rescue").style.setProperty("--rise","0%");
+ E("rescue").classList.remove("rescued");
+ E("rescueResult").hidden=true;
+ E("status").textContent="";
+ for(const [column,words,side,key] of [
+   ["english",set,"prompt","english"],["targetWords",shuffle(set),"target","target"]
+ ]){
+   E(column).replaceChildren(...words.map(pair=>{
+     const card=document.createElement("div");
+     card.className="match-card";
+     card.dataset.side=side;
+     card.dataset.pair=pair.id;
+     card.textContent=pair[key];
+     return card;
+   }));
+ }
+ hud();
+}
+function matchCards(card,other){
+ if(!other||card.dataset.side===other.dataset.side)return;
+ const id=Number(card.dataset.pair);
+ if(card.dataset.pair!==other.dataset.pair){
+   E("status").textContent="NOPE";
+   E("status").style.color="#ff6a80";
+   card.animate([{background:"#a92e48"},{background:""}],{duration:350});
+   const notice=++noticeId;
+   later(()=>{if(notice===noticeId)E("status").textContent=""},650);
+   bad();
+   return;
+ }
+ noticeId++;
+ matched.add(id);
+ const word=vocab[id].target;
+ const from=other.getBoundingClientRect();
+ card.classList.add("matched");other.classList.add("matched");
+ const block=document.createElement("div");
+ block.className="tower-block";
+ const plaque=document.createElement("span");
+ plaque.textContent=word;
+ block.append(plaque);
+ E("tower").append(block);
+ const to=block.getBoundingClientRect();
+ block.animate([{transform:`translate(${from.left-to.left}px,${from.top-to.top}px)`,opacity:.4},{transform:"none",opacity:1}],{duration:350});
+ E("rescue").style.setProperty("--rise",matched.size/boardSize*65+"%");
+ E("rescueGirl").animate([{transform:"translate(-50%,0)"},{transform:"translate(-50%,-9px)"},{transform:"translate(-50%,0)"}],{duration:350});
+ score+=10;
+ E("status").textContent="✓ "+word;
+ E("status").style.color="#78df62";
+ good();speak(word);hud();
+ if(matched.size===boardSize)later(()=>{
+   E("rescue").classList.add("rescued");
+   E("status").textContent="";
+   E("nextBoard").textContent=setIndex+SET>=order.length?"PLAY NEXT ROUND":"NEXT BOARD";
+   E("rescueResult").hidden=false;
+   E("nextBoard").focus();
+ },400);
+}
+let noticeId=0;
+E("nextBoard").onclick=function(){
+ if(E("rescueResult").hidden)return;
+ setIndex+=SET;
+ if(setIndex>=order.length){order=shuffle(vocab);setIndex=0}
+ renderSet();
+};
+const matchBoard=E("board");
+matchBoard.addEventListener("pointerdown",e=>{
+ const card=e.target.closest(".match-card:not(.matched)");
+ if(!card||drag||paused||e.button!==0)return;
+ drag={card,id:e.pointerId,x:e.clientX,y:e.clientY};
+ card.classList.add("dragging");
+ matchBoard.setPointerCapture(e.pointerId);
+});
+matchBoard.addEventListener("pointermove",e=>{
+ if(drag?.id!==e.pointerId)return;
+ drag.card.style.transform=`translate(${e.clientX-drag.x}px,${e.clientY-drag.y}px)`;
+});
+matchBoard.addEventListener("pointerup",e=>{
+ if(drag?.id!==e.pointerId)return;
+ const card=drag.card;
+ cancelDrag();
+ const target=document.elementFromPoint(e.clientX,e.clientY)?.closest(".match-card:not(.matched)");
+ if(!paused)matchCards(card,target);
+});
+for(const type of ["pointercancel","lostpointercapture"]){
+ matchBoard.addEventListener(type,e=>{if(drag?.id===e.pointerId)cancelDrag()});
+}
+function toMenu(){
+ if(subscriber){subscriber({type:"BT_MATCH_MENU"});return}
+ E("rescueResult").hidden=true;
+ resetPause();
+ E("testStart").hidden=false;
+ game.classList.remove("active");
+ E("testStart").focus();
+}
+E("testStart").onclick=start;
+E("restart").onclick=start;
+E("mainMenu").onclick=toMenu;
+E("sound").onclick=function(){
+ soundOn=!soundOn;
+ if(!soundOn)window.speechSynthesis?.cancel();
+ this.textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+};
+var paused=false, matchTimers=new Set();
+function later(callback,delay){
+ function run(){
+   matchTimers.delete(timer);
+   if(paused){later(callback,100);return}
+   callback();
+ }
+ var timer=setTimeout(run,delay);
+ matchTimers.add(timer);
+}
+function resetPause(){
+ cancelDrag();
+ window.speechSynthesis?.cancel();
+ matchTimers.forEach(clearTimeout);matchTimers.clear();
+ paused=false;E("board").inert=false;E("pause").textContent="PAUSE";
+}
+E("pause").onclick=function(){
+ paused=!paused;cancelDrag();E("board").inert=paused;this.textContent=paused?"RESUME":"PAUSE";
+};
+function state(){
+ return {status:disposed?"disposed":game.classList.contains("active")&&!paused?"running":"paused",soundOn,score,lives:0,round:1,done:score/10};
+}
+if(parent!==window)document.body.classList.add("embedded");
+window.BTMatch={
+ initialize(set){
+   if(!Array.isArray(set.pairs)||set.pairs.length<4||!set.pairs.every(pair=>Array.isArray(pair)&&pair.length===2&&pair.every(word=>typeof word==="string"&&word.trim())))return false;
+   vocab=set.pairs.map(([english,target],id)=>({id,english,target}));
+   lang=set.language;
+   document.querySelector(".colTitle").textContent=new Intl.DisplayNames(["en"],{type:"language"}).of(set.promptLanguage);
+   E("targetTitle").textContent=new Intl.DisplayNames(["en"],{type:"language"}).of(lang);
+   initialized=true;
+   return true;
+ },
+ setShellManaged(value){document.body.classList.toggle("shell-managed",value);return true},
+ subscribe(handler){if(subscriber)return false;subscriber=handler;return true},
+ resume(){if(!initialized)return false;if(!game.classList.contains("active"))start();else if(paused)E("pause").click();return true},
+ pause(){if(game.classList.contains("active")&&!paused)E("pause").click();return true},
+ restart(){if(!initialized)return false;start();return true},
+ setSound(value){if(typeof value!=="boolean")return false;if(soundOn!==value)E("sound").click();return true},
+ resize(){},
+ state,
+ dispose(){disposed=true;resetPause();game.classList.remove("active");subscriber=null}
+};
+})();</script><script type="module" src="./bootstrap.mjs"></script></body></html>
