@@ -1,5 +1,5 @@
 import {attachMatchSession} from './session.mjs';
-const buildId = '75fa265b57a9b6700340a75b939d3e85b661bb30';
+const buildId = 'e6726014f76aa0273b3196669a431d9acec577d6';
 
 let shellOrigin;
 try { shellOrigin = new URL(document.referrer).origin; } catch {}
